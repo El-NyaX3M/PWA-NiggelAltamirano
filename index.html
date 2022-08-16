@@ -16,9 +16,11 @@
     <canvas id="myCanvas" width="500" height="500">
         Adiós mundo
     </canvas>
+    <img id="image" src="icon.JPG" style="display: none;">
     <script>
         var canvas = document.getElementById('myCanvas');
         var context = canvas.getContext('2d');
+        var color = "red";
         console.log(context);
 ///          Cuadros
         context.fillStyle = "rgb(71, 128, 66)";
@@ -43,6 +45,7 @@
         context.fillStyle = "rgba(131, 88, 60,0.5)";
         context.fill();
         context.stroke();
+
 ///         Círculos
         context.beginPath();
         context.arc(100,250,100,0,2*Math.PI);
@@ -53,6 +56,51 @@
         context.arc(350,250,100,0,2*Math.PI);
         context.fillStyle = "rgb(71, 128, 66)";
         context.fill();
+        
+///         Textos
+        context.font = "50px Times New Roman";
+        context.fillStyle = "#06a";
+        context.fillText("Hola Mundo", 10, 100);
+        context.strokeStyle = "#06a";
+        context.strokeText("Hola Mundo", 10, 150); 
+
+///         Gradientes
+        var gradient = context.createLinearGradient(10,150,240,150);
+        gradient.addColorStop(0, "#c70");
+        gradient.addColorStop(1, "#0af");
+        context.fillStyle = gradient;
+        context.fillRect(10,150,240,150);
+        gradient = context.createRadialGradient(375, 225, 20, 375, 225, 130);
+        gradient.addColorStop(0, "#c70");
+        gradient.addColorStop(1, "#0af");
+        context.fillStyle = gradient;
+        context.fillRect(260, 150, 240, 150);
+       
+///         Imagen
+        var imagen = document.getElementById('image');
+        context.drawImage(imagen, 10, 10,200,200);
+        
+///         evento click
+        var color
+        canvas.addEventListener('click', function(e){
+            context.beginPath();
+            context.arc(e.offsetX, e.offsetY, 35, 0, 2*Math.PI);
+            context.strokeStyle = "#000";
+            context.fillStyle = color;
+            context.fill();
+            context.stroke();
+        });
+        
+        canvas.addEventListener('mouseover', function(e){
+            var randomColor=generateRandomColor();
+            color = randomColor;
+        })
+
+        function generateRandomColor() {
+            var r = () => Math.random() * 256 >> 0;
+            var color = `rgb(${r()}, ${r()}, ${r()}, 0.5)`;
+            return color;
+        } 
     </script>
 </body>
 </html>
