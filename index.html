@@ -13,14 +13,46 @@
 
 </head>
 <body>
-    <canvas id="myCanvas" width="500" height="500">
+    <canvas id="myCanvas" width="1000" height="1250">
         Adiós mundo
     </canvas>
     <img id="image" src="icon.JPG" style="display: none;">
     <script>
+        
         var canvas = document.getElementById('myCanvas');
         var context = canvas.getContext('2d');
         var color = "red";
+        var figure = 'arc';
+        var press = false;
+
+        var char_x = 50, char_y = 50;
+        document.addEventListener("keydown",function(e){
+            
+            if(e.key == "w" || e.key == "ArrowUp"){
+                char_y -= 5;
+            }
+            else if(e.key == "a" || e.key == "ArrowLeft"){
+                char_x -= 5;
+            }
+            else if(e.key == "s" || e.key == "ArrowDown"){
+                char_y += 5;
+            }
+            else if(e.key == "d" || e.key == "ArrowRight"){
+                char_x += 5;
+            }
+            
+            paint();
+        })
+
+        function paint(){
+            context.fillStyle = "rgb(255,255,255)";
+            context.fillRect(0,0,1000,1250);
+
+            context.fillStyle = "rgb(250, 10, 150)";
+            context.fillRect(char_x - 25, char_y - 25, 50, 50);
+            context.strokeRect(char_x - 25, char_y - 25, 50, 50);
+        }
+
         console.log(context);
 ///          Cuadros
         context.fillStyle = "rgb(71, 128, 66)";
@@ -83,24 +115,57 @@
 ///         evento click
         var color
         canvas.addEventListener('click', function(e){
-            context.beginPath();
-            context.arc(e.offsetX, e.offsetY, 35, 0, 2*Math.PI);
+            color = generateRandomColor();
             context.strokeStyle = "#000";
             context.fillStyle = color;
-            context.fill();
-            context.stroke();
+            if(figure == 'arc'){
+                context.beginPath();
+                context.arc(e.offsetX, e.offsetY, 35, 0, 2*Math.PI);
+                context.fill();
+                context.stroke();
+                figure = 'rec';
+            }
+            else if(figure == 'rec'){
+                context.fillRect(e.offsetX-25,e.offsetY-25,50,50);
+                context.strokeRect(e.offsetX-25,e.offsetY-25,50,50);
+                figure = 'arc';
+            }
+            
+            
         });
         
         canvas.addEventListener('mouseover', function(e){
-            var randomColor=generateRandomColor();
+           var randomColor=generateRandomColor();
             color = randomColor;
         })
 
+        canvas.addEventListener('mouseout',function(e){
+            figure = (figure=='arc')?'rec':'arc';
+            var randomColor = generateRandomColor();
+            color = randomColor;
+        })
+
+        canvas.addEventListener('mousemove', function(e){
+            if(press){
+                context.fillStyle = "#000";
+                context.fillRect(e.offsetX - 5,e.offsetY - 5,10,10);
+            }
+            
+        })
+
+        canvas.addEventListener("mouseup", function(e){
+            press = false;
+        })
+
+        canvas.addEventListener("mousedown", function(e){
+            press = true;
+        })
         function generateRandomColor() {
             var r = () => Math.random() * 256 >> 0;
             var color = `rgb(${r()}, ${r()}, ${r()}, 0.5)`;
             return color;
         } 
+
     </script>
 </body>
 </html>
