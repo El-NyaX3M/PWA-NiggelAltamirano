@@ -13,20 +13,28 @@
 
 </head>
 <body>
-    <canvas id="myCanvas" width="1000" height="1250">
+    <canvas id="myCanvas" width="800" height="800">
         Adiós mundo
     </canvas>
     <img id="image" src="icon.JPG" style="display: none;">
     <script>
         
-        var canvas = document.getElementById('myCanvas');
-        var context = canvas.getContext('2d');
-        var color = "red";
-        var figure = 'arc';
-        var press = false;
+        var canvas = null;
+        var context = null;
+        //var color = "red";
+        //var figure = 'arc';
+        //var press = false;
 
+        
         var char_x = 50, char_y = 50;
-        document.addEventListener("keydown",function(e){
+
+        function run(){
+            canvas = document.getElementById("myCanvas");
+            context = canvas.getContext("2d");
+
+            paint();
+        }
+        /*document.addEventListener("keydown",function(e){
             
             if(e.key == "w" || e.key == "ArrowUp"){
                 char_y -= 5;
@@ -43,17 +51,34 @@
             
             paint();
         })
-
+        */
         function paint(){
+
+            window.requestAnimationFrame(paint);
             context.fillStyle = "rgb(255,255,255)";
             context.fillRect(0,0,1000,1250);
 
             context.fillStyle = "rgb(250, 10, 150)";
             context.fillRect(char_x - 25, char_y - 25, 50, 50);
             context.strokeRect(char_x - 25, char_y - 25, 50, 50);
+            
+            char_x += 5;
+            if(char_x >= 800){
+                char_x = 0;
+            }
         }
 
-        console.log(context);
+        window.requestAnimationFrame = (function () {
+            return window.requestAnimationFrame ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            function (callback) {
+                window.setTimeout(callback, 17);
+            };
+        }());
+
+        window.addEventListener("load", run, false);
+        /*console.log(context);
 ///          Cuadros
         context.fillStyle = "rgb(71, 128, 66)";
         context.fillRect(10,10,55,50);
@@ -165,7 +190,7 @@
             var color = `rgb(${r()}, ${r()}, ${r()}, 0.5)`;
             return color;
         } 
-
+        */
     </script>
 </body>
 </html>
