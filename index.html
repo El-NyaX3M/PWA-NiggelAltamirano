@@ -24,48 +24,72 @@
         //var color = "red";
         //var figure = 'arc';
         //var press = false;
-
+        var player1 = null;
+        var player2 = null;
+        var speed = 5;
+        var score = 0;
+        var direction = "right";
         
-        var char_x = 50, char_y = 50;
 
         function run(){
             canvas = document.getElementById("myCanvas");
             context = canvas.getContext("2d");
 
+            player1 = new Square(50, 50, 50, 50, "blue");
+            player2 = new Square(Math.random()*801, Math.random()*801,50,50,"green");
             paint();
         }
-        /*document.addEventListener("keydown",function(e){
-            
-            if(e.key == "w" || e.key == "ArrowUp"){
-                char_y -= 5;
-            }
-            else if(e.key == "a" || e.key == "ArrowLeft"){
-                char_x -= 5;
-            }
-            else if(e.key == "s" || e.key == "ArrowDown"){
-                char_y += 5;
-            }
-            else if(e.key == "d" || e.key == "ArrowRight"){
-                char_x += 5;
-            }
-            
-            paint();
-        })
-        */
+        
+        
         function paint(){
 
             window.requestAnimationFrame(paint);
             context.fillStyle = "rgb(255,255,255)";
             context.fillRect(0,0,1000,1250);
 
-            context.fillStyle = "rgb(250, 10, 150)";
-            context.fillRect(char_x - 25, char_y - 25, 50, 50);
-            context.strokeRect(char_x - 25, char_y - 25, 50, 50);
-            
-            char_x += 5;
-            if(char_x >= 800){
-                char_x = 0;
+            context.fillStyle = "black";
+            context.fillText("SCORE: "+score, 5,10);
+            player1.paint(context);
+            player2.paint(context);
+            update();
+        }
+
+        function update(){
+            if(direction == "up"){
+                //char_y -= 5;
+                player1.y -= speed;
+                if(player1.y <= 0){
+                    player1.y = 800;
+                }
             }
+            else if(direction == "left"){
+                //char_x -= 5;
+                player1.x -= speed;
+                if(player1.x <= 0){
+                    player1.x = 800;
+                }
+            }
+            else if(direction == "down"){
+                //char_y += 5;
+                player1.y += speed;
+                if(player1.y >= 800){
+                    player1.y = 0;
+                }
+            }
+            else if(direction == "right"){
+                //char_x += 5;
+                player1.x += speed;
+                if(player1.x >= 800){
+                    player1.x = 0;
+                }
+            }
+            if(player1.se_tocan(player2)){
+                player2.x = Math.random() * 801;
+                player2.y = Math.random() * 801;
+
+                score += 10;
+            }
+            console.log(direction);
         }
 
         window.requestAnimationFrame = (function () {
@@ -77,7 +101,52 @@
             };
         }());
 
+        document.addEventListener("keydown",function(e){
+            
+            if(e.key == "w" || e.key == "ArrowUp"){
+                //char_y -= 5;
+                direction = "up";
+            }
+            else if(e.key == "a" || e.key == "ArrowLeft"){
+                //char_x -= 5;
+                direction = "left";
+            }
+            else if(e.key == "s" || e.key == "ArrowDown"){
+                //char_y += 5;
+                direction = "down";
+            }
+            else if(e.key == "d" || e.key == "ArrowRight"){
+                //char_x += 5;
+                direction = "right";
+            }
+            
+            paint();
+        })
+
         window.addEventListener("load", run, false);
+
+        function Square(x, y, w, h, c){
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.c = c;
+
+            this.paint = function(context){
+                context.fillStyle = this.c;
+                context.fillRect(this.x - 25, this.y - 25, this.w, this.h);
+                context.strokeRect(this.x - 25, this.y - 25, this.w, this.h);
+            }
+
+            this.se_tocan = function (target) { 
+                if(this.x < target.x + target.w &&
+                this.x + this.w > target.x && 
+                this.y < target.y + target.h && 
+                this.y + this.h > target.y){
+                    return true;
+                }
+            };
+        }
         /*console.log(context);
 ///          Cuadros
         context.fillStyle = "rgb(71, 128, 66)";
@@ -185,12 +254,13 @@
         canvas.addEventListener("mousedown", function(e){
             press = true;
         })
+        */
         function generateRandomColor() {
             var r = () => Math.random() * 256 >> 0;
-            var color = `rgb(${r()}, ${r()}, ${r()}, 0.5)`;
+            var color = `rgb(${r()}, ${r()}, ${r()})`;
             return color;
         } 
-        */
+        
     </script>
 </body>
 </html>
