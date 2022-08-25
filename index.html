@@ -26,10 +26,13 @@
         //var press = false;
         var player1 = null;
         var player2 = null;
+
+        var wall = [null,null,null,null];
         var speed = 5;
         var score = 0;
         var direction = "right";
         
+        var pause = false;
 
         function run(){
             canvas = document.getElementById("myCanvas");
@@ -37,6 +40,10 @@
 
             player1 = new Square(50, 50, 50, 50, "blue");
             player2 = new Square(Math.random()*801, Math.random()*801,50,50,"green");
+            wall[0] = new Square(100,200,400,35,"gray");
+            wall[1] = new Square(100,600,400,35,"gray");
+            wall[2] = new Square(200,100,35,400,"gray");
+            wall[3] = new Square(600,100,35,400,"gray");
             paint();
         }
         
@@ -51,7 +58,22 @@
             context.fillText("SCORE: "+score, 5,10);
             player1.paint(context);
             player2.paint(context);
-            update();
+            wall[0].paint(context);
+            wall[1].paint(context);
+            wall[2].paint(context);
+            wall[3].paint(context);
+            if(pause){
+                context.fillStyle = "rgba(150,150,150,0.5)";
+                context.fillRect(0,0,800,800);
+
+                context.fillStyle = "white";
+                context.fillText("PAUSE", 350, 380);
+
+            }
+            else{
+                update();
+            }
+            
         }
 
         function update(){
@@ -87,7 +109,40 @@
                 player2.x = Math.random() * 801;
                 player2.y = Math.random() * 801;
 
+                speed += 5;
                 score += 10;
+            }
+            if(player1.se_tocan(wall[0])||player1.se_tocan(wall[1])||player1.se_tocan(wall[2])||player1.se_tocan(wall[3])){
+                //speed = 0;
+
+                if(direction == "up"){
+                //char_y -= 5;
+                player1.y += speed;
+                if(player1.y <= 0){
+                    player1.y = 800;
+                }
+            }
+            else if(direction == "left"){
+                //char_x -= 5;
+                player1.x += speed;
+                if(player1.x <= 0){
+                    player1.x = 800;
+                }
+            }
+            else if(direction == "down"){
+                //char_y += 5;
+                player1.y -= speed;
+                if(player1.y >= 800){
+                    player1.y = 0;
+                }
+            }
+            else if(direction == "right"){
+                //char_x += 5;
+                player1.x -= speed;
+                if(player1.x >= 800){
+                    player1.x = 0;
+                }
+            }
             }
             console.log(direction);
         }
@@ -102,7 +157,7 @@
         }());
 
         document.addEventListener("keydown",function(e){
-            
+            console.log(e.key);
             if(e.key == "w" || e.key == "ArrowUp"){
                 //char_y -= 5;
                 direction = "up";
@@ -119,8 +174,16 @@
                 //char_x += 5;
                 direction = "right";
             }
+            else if(e.key == " "){
+                if(pause){
+                    pause = false;
+                }
+                else{
+                    pause = true;
+                }
+            }
             
-            paint();
+            
         })
 
         window.addEventListener("load", run, false);
