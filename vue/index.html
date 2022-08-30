@@ -32,6 +32,30 @@
         <h1>
             {{ sumatoria }}
         </h1>
+        <hr>
+
+        <input type="text" v-model="age">
+        <button @click="check">
+            Verificar
+        </button>
+        <h1 v-if="age < 18">
+            NO PASA
+        </h1>
+        <h1 v-else>
+            SÍ PASA
+        </h1>
+        <hr>
+
+        <ol>
+            <li v-for="item in chamos" :key="index">
+                {{item.name}} : <span></span> {{item.color}}
+            </li>
+        </ol>
+        <input type="text" v-model="chamo_name">
+        <input type="text" v-model="chamo_color">
+        <button @click="save">
+            Guardar
+        </button>
     </div>
     <script type="text/javascript">
         const { createApp }  = Vue;
@@ -55,12 +79,22 @@
                 return{
                     n1: 0,
                     n2: 0,
-                    sumatoria: 0
+                    sumatoria: 0,
+                    age : 0,
+                    chamos: [{name:"kibo", color: "tuxedo"}, {name:"kibo", color: "tuxedo"}, {name:"kibo", color: "cálico"}],
+                    chamo_name: "",
+                    chamo_color: ""
                 }
             },
             methods:{
                 sumar(){
                     this.sumatoria = parseInt(this.n1) + parseInt(this.n2)
+                },
+                check(){
+
+                },
+                save(){
+                    this.chamos.push({name: this.chamo_name, color: this.chamo_color})
                 }
             }
         }).mount("#suma")
