@@ -57,9 +57,69 @@
             Guardar
         </button>
     </div>
+    <hr>
+    <script src="users.json"></script>
+    <div id ="dia2">
+        <fieldset>
+            <legend>
+                Acceso al panel
+            </legend>
+            <label>
+                Correo electrónico
+            </label>
+            <input type="email" v-model="email">
+
+            <label>
+                Password
+            </label>
+            <input type="password" v-model="password" id="">
+
+            <button @click="login">
+                Acceder
+            </button>
+        </fieldset>
+    </div>
+
+
+
     <script type="text/javascript">
         const { createApp }  = Vue;
         
+        const dia2 = createApp({
+            data(){
+                return{
+                    users: null,
+                    email: "",
+                    password: ""
+                }
+            },
+            methods: {
+                login(e){
+                    e.preventDefault;
+                    var email = this.email;
+                    var password = this.password;
+                    var access = this.users.map(function(user){
+                        if(email === user.email.toLowerCase()){
+                            if(password === user.password){
+                                return true;
+                            }
+                        }
+                        
+                    })
+                    alert(access);
+                }
+            },
+            mounted(){
+                fetch("users.json")
+                .then((res) => res.json())
+                .then((json) => (this.users = json))
+                .catch((err) => (console.log(err)))
+            }
+        }).mount("#dia2");
+
+
+
+
         const app = createApp({
             data(){
                 return {
