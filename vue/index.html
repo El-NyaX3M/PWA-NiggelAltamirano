@@ -101,12 +101,15 @@
                     var access = this.users.map(function(user){
                         if(email === user.email.toLowerCase()){
                             if(password === user.password){
+                                sessionStorage.setItem("name", user.name);
+                                window.open("tabla.html");
                                 return true;
                             }
                         }
                         
                     })
-                    alert(access);
+                    
+                    
                 }
             },
             mounted(){

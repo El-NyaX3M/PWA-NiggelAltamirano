@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+    <script src="users.json"></script>
+    <div id="tabla">
+        <h2>Usuario: {{nombre}}</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Username</th>
+                <th>eMail</th>
+                <th>Phone</th>
+            </tr>
+            <tr v-for="user in users">
+                <td>{{user.name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phone}}</td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        const { createApp } = Vue;
+
+        const table = createApp({
+            data(){
+                return{
+                    users:null,
+                    
+                    nombre:sessionStorage.getItem("name")
+                }
+            },
+            mounted(){
+                fetch("users.json")
+                .then((res) => res.json())
+                .then((json) => (this.users = json))
+                .catch((err) => (console.log(err)))
+            }
+        }).mount("#tabla")
+    </script>
+</body>
+</html>
