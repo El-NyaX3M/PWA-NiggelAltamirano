@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <!--Agregar v if para que se muestren los detalles de la peli elegida-->
+    <div id="contenedor">
+        <div v-if="detailView">
+            <button @click="cerrar">Cerrar detalles</button>
+            <br>
+            <img :src="'https://image.tmdb.org/t/p/w300'+peli.poster_path" alt="">
+        </div>
+        <div v-else>
+            <h1>{{user}}</h1>
+            <div v-for="peli in popular">
+                <img :src="'https://image.tmdb.org/t/p/w300'+peli.backdrop_path" alt="">
+                <h3>{{ peli.title }} </h3>
+                <label for="">Release date: {{peli.release_date}}</label>
+                <br>
+                <button @click="verDetalles(peli)">Ver detalles</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="pelis.js"></script>
+</html>
