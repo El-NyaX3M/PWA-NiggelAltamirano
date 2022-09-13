@@ -15,6 +15,29 @@
             <button @click="cerrar">Cerrar detalles</button>
             <br>
             <img :src="'https://image.tmdb.org/t/p/w300'+peli.poster_path" alt="">
+            <h2>{{peli.title}}</h2>
+            <label for="">{{peli.tagline}}</label>
+            <br>
+            
+            <label>Release date: {{peli.release_date}}</label>
+            <p>{{peli.overview}}</p>
+            <label for="">Original language: {{peli.original_language}}</label>
+            <br>
+            <label for="">Status: {{peli.status}}</label>
+            <br>
+            <label for="">Budget: ${{peli.budget}}</label>
+            <h3>Calificación</h3>
+            <label for="">Puntuación: {{peli.vote_average}}</label>
+            <br>
+            <br>
+            <button @click="menos">-</button>
+            <label for="">{{rate}}</label>
+            <button @click="mas">+</button>
+            <br>
+            <br>
+            <button @click="ratear">Calificar</button>
+            <br>
+            <button @click="desratear">Borrar Calificación</button>
         </div>
         <div v-else>
             <h1>{{user}}</h1>
