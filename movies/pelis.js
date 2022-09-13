@@ -52,7 +52,7 @@ const { createApp } = Vue;
 
                 var config = {
                     method: 'get',
-                    url: 'https://api.themoviedb.org/3/movie/985939?api_key=8222147f508c762ed048e8c7e5aa6f09&language=en-US',
+                    url: 'https://api.themoviedb.org/3/movie/'+peli.id+'?api_key=8222147f508c762ed048e8c7e5aa6f09&language=en-US',
                     headers: { 
                       'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4MjIyMTQ3ZjUwOGM3NjJlZDA0OGU4YzdlNWFhNmYwOSIsInN1YiI6IjYzMWQxYWJlOWMyNGZjMDA3ZDc3MTcxYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.UflnCScTidL_L1rp_C05duZR9AytlvCUy2MFAxf-u_A'
                     }
