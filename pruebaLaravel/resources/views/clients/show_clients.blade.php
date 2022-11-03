@@ -43,6 +43,11 @@
                                 <td>
                                     {{$client->phone_number}}
                                 </td>
+                                <td>
+                                    <a href="{{url('/clients/edit',$client->id)}}">
+                                        Editar
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
