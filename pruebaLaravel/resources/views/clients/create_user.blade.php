@@ -7,11 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    <form method="post" action="http://127.0.0.1:8000/users/">
+    <form method="post" action="">
         @csrf
 
+        <label for="">Nombre: </label>
         <input type="text" placeholder="name" name="name">
-        <input type="" placeholder="lastname" name="lastname">
+
+        <label for="">Correo: </label>
+        <input type="email" placeholder="Correo" name="email">
+
+        <label for="">Teléfono</label>
+        <input type="text" placeholder="Teléfono" name="phone">
 
         <button type="submit">Guardar</button>
     </form>
