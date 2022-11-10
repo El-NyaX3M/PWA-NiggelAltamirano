@@ -27,6 +27,10 @@ Route::get('suma/{n1}/{n2}/{n3?}', function($n1,$n2,$n3=0){
     echo $n1 + $n2 + $n3;
 })->where(['n1' => '[0-9]+','n2' => '[0-9]+']);
 
+Route::get('/home', function(){
+    return view('home');
+});
+
 Route::get('login', function(){
     return view('login');
 })->name('login');
