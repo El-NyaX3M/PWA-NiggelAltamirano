@@ -64,7 +64,7 @@ class ClientController extends Controller
     public function edit($id)
     {
         $client = Client::with('reservations')->find($id);
-        return view('clients.update_client', compact('client'));
+        return view('clients.update_client', compact('client')); /**client es la variable */
     }
 
     /**
